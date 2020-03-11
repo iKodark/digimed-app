@@ -1,0 +1,7 @@
+.app-header .navbar-toggler:nth-child(3) {
+    display: none;
+}
+
+.main {
+    padding: 30px 30px;
+}
