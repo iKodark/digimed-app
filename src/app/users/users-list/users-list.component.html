@@ -1,1 +1,105 @@
-<p>users-list works!</p>
+    <mat-toolbar color="primary">
+        <h1>Usuários</h1>
+    </mat-toolbar>
+    <mat-card>
+        <br>
+        <form class="example-form">
+          <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group row">
+                      <mat-form-field class="nomes">
+                        <mat-label>Nome:</mat-label>
+                        <input matInput placeholder="Ex. Digimed Sistema Hospitalar">
+                      </mat-form-field>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group row">
+                      <mat-form-field class="email">
+                        <mat-label>E-mail:</mat-label>
+                        <input type="email" matInput placeholder="Ex. digimed@gmail.com">
+                      </mat-form-field>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group row">
+                      <mat-form-field class="celular">
+                        <mat-label>Celular:</mat-label>
+                        <input type="number" matInput placeholder="Ex. 9999-9999">
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="form-group row">
+                  <mat-form-field class="tipo_usuario">
+                    <mat-label>Tipo de Usuário</mat-label>
+                    <mat-select [(value)]="selected">
+                      <mat-option>Nenhum</mat-option>
+                      <mat-option value="medico">Médico</mat-option>
+                      <mat-option value="enfermeira">Enfermeira</mat-option>
+                      <mat-option value="secretaria">Secretária</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group row">
+                      <mat-form-field class="usuario">
+                        <mat-label>Usuário:</mat-label>
+                        <input type="text" matInput placeholder="Ex. Digimed">
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="form-group row">
+                  <mat-form-field class="senha">
+                    <mat-label>Senha:</mat-label>
+                    <input type="password" matInput placeholder="******">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <button class="botaoCancelar" type="reset" mat-raised-button color="warn">Cancelar</button>
+              <button class="botaoGravar"mat-raised-button color="primary">Gravar</button>
+            </div>
+          </div>
+        </form>
+    </mat-card>
+    <br>
+      <mat-form-field class="buscar">
+        <mat-label>Buscar...</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex.Digimed">
+      </mat-form-field>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Tipo de Usuário</th>
+            <th scope="col">Usuário</th>
+            <th scope="col">Celular</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Remover</th>
+          </tr>
+        </thead>
+        
+      </table>
+    
+    
+   

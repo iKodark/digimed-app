@@ -1,0 +1,39 @@
+  .nomes {
+    width: 50%;
+  }
+
+  .email{
+    width: 50%;
+  }
+
+  .usuario{
+    width: 90%;
+  }
+
+  .senha{
+    width: 60%;
+  }
+  
+  .celular {
+    width: 90%;
+  }
+
+  .tipo_usuario {
+    width: 60%;
+  }
+
+  .botaoGravar{
+    width: 100px;
+    background-color: green;
+    margin-left: 7px;
+  }
+
+  .botaoCancelar{
+    width: 100px;
+    background-color: red;
+   
+  }
+
+  .buscar{
+    width: 100%;
+  }

@@ -51,6 +51,10 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'dashboard',
+        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
         path: 'usuarios',
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
       }
