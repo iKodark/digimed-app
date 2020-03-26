@@ -5,3 +5,25 @@
 .main {
     padding: 30px 30px;
 }
+
+.sidebar-custom {
+    background-color: #ffffff !important;
+}
+
+.sidebar-custom ::ng-deep .nav-link {
+    color: #a2a2a2;
+    font-weight: 500;
+}
+
+.sidebar ::ng-deep .nav-link.active {
+    color: #797979;
+    background: #20a8d854;
+}
+
+.header-custom {
+    background-color: #2eadd3 !important;
+}
+
+.sidebar-minimizer-custom {
+    background-color: #2eadd3 !important;
+}

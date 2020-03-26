@@ -27,6 +27,14 @@ export class ApiService {
         catchError(this.handleError))
   }
 
+  post(route, data): Observable<any> {
+    return this.httpClient.post<any>(`${this.url}/${route}`, JSON.stringify(data), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
   // Manipulação de erros
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';
