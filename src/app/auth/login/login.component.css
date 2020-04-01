@@ -1,0 +1,15 @@
+.card{
+    width: 350px;
+    height: 350px;
+    margin-top: 150px;
+    margin-left: 520px;
+}
+
+.titulo{
+    margin-left: 65px;
+    margin-top: 50px;
+}
+
+.botao{
+    width: 100%;
+}
