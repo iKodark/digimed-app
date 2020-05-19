@@ -13,7 +13,12 @@ export const navItems: INavData[] = [
   {
     name: 'Usuários',
     url: '/usuarios',
-    icon: 'icon-pencil'
+    icon: 'icon-user'
+  },
+  {
+    name: 'Pacientes',
+    url: '/pacientes',
+    icon: 'icon-people'
   },
   // {
   //   title: true,

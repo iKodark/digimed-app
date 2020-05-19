@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmployeesRoutingModule } from './employees.routing';
-import { EmployeesListComponent } from './employees-list/employees-list.component';
+import { PatientsComponent } from './patients.component';
+import { PatientsRoutingModule } from './patients.routing';
 import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatToolbarModule, MatToolbar} from '@angular/material/toolbar';
@@ -22,12 +22,10 @@ import { PipesModule } from '../pipes/pipes.module';
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-  declarations: [
-    EmployeesListComponent
-  ],
+  declarations: [PatientsComponent],
   imports: [
     CommonModule,
-    EmployeesRoutingModule,
+    PatientsRoutingModule,
     MatCardModule,
     MatRadioModule,
     MatToolbarModule,
@@ -46,8 +44,6 @@ import { NgxMaskModule } from 'ngx-mask';
     MatAutocompleteModule,
     PipesModule,
     NgxMaskModule.forChild (),
-  ],
-  exports: []
+  ]
 })
-export class EmployeesModule { }
-
+export class PatientsModule { }

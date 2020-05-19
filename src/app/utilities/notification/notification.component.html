@@ -1,0 +1,5 @@
+<div class="notify-container align-items-center justify-content-center" [ngClass]="{'notify-show' : notificationService.show}">
+    <div class="mx-auto col-md-4 notify-item text-center" [ngClass]="{'notify-success' : notificationService.result == 'success', 'notify-error' : notificationService.result == 'error'}">
+        <span class="notify-message">{{notificationService.message}}</span>
+    </div>
+</div>

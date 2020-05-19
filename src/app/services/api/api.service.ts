@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { LocalstorageService } from '../localstorage/localstorage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,23 @@ export class ApiService {
   url = 'http://localhost:9000/api';
 
   // injetando o HttpClient
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private localStorageService: LocalstorageService
+  ) { }
 
   // Headers
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({
+      'Accept': '*/*',
+      'Access-Control-Allow-Origin': '*',
+      'Content-type': 'application/json',
+    })
   }
 
 
   get(route): Observable<any> {
-    
-    return this.httpClient.get<any>(`${this.url}/${route}`)
+    return this.httpClient.get<any>(`${this.url}/${route}`, this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError))
@@ -35,18 +42,41 @@ export class ApiService {
       )
   }
 
+  put(route, data): Observable<any> {
+    return this.httpClient.put<any>(`${this.url}/${route}`, JSON.stringify(data), this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      )
+  }
+
+  delete(route) {
+    return this.httpClient.delete<any>(`${this.url}/${route}`, this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      )
+  }
+
   // Manipulação de erros
   handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
+    let errorData = {
+      message: '',
+      code: 500
+    };
     if (error.error instanceof ErrorEvent) {
       // Erro ocorreu no lado do client
-      errorMessage = error.error.message;
+      errorData.message = error.error.message;
     } else {
       // Erro ocorreu no lado do servidor
-      errorMessage = `Código do erro: ${error.status}, ` + `menssagem: ${error.message}`;
+      errorData = {
+        message: error.message,
+        code: error.status
+      };
+      
     }
-    console.log(errorMessage);
-    return throwError(errorMessage);
+    console.log(errorData);
+    return throwError(errorData);
   };
 
 }

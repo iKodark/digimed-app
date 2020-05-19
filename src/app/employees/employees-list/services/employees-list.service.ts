@@ -25,8 +25,23 @@ export class EmployeesListService {
     return this.apiService.get(`states`);
   }
 
+  getAllRoles() {
+
+    return this.apiService.get('roles');
+  }
+
   createEmployee(data) {
 
     return this.apiService.post(`employee`, data);
+  }
+
+  updateEmployee(data) {
+
+    return this.apiService.put(`employee`, data);
+  }
+
+  deleteEmployee(id) {
+
+    return this.apiService.delete(`employee/${id}`);
   }
 }

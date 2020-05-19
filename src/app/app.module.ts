@@ -23,6 +23,10 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
+import {NgxMaskModule, IConfig} from 'ngx-mask';
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
+
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -42,6 +46,9 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
+import { NotificationModule } from './utilities/notification/notification.module';
+import { Interceptor } from './auth/interceptor.module';
+import { AuthGuardService } from './guards/auth-guard.service';
 
 @NgModule({
   imports: [
@@ -58,7 +65,10 @@ import { ChartsModule } from 'ng2-charts';
     TabsModule.forRoot(),
     ChartsModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxMaskModule.forRoot(options),
+    NotificationModule,
+    Interceptor
   ],
   declarations: [
     AppComponent,
@@ -68,10 +78,9 @@ import { ChartsModule } from 'ng2-charts';
     LoginComponent,
     RegisterComponent
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }],
+  providers: [
+    AuthGuardService
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

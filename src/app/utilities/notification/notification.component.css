@@ -1,0 +1,33 @@
+.notify-container {
+    position: absolute;
+    top: -10px;
+    width: 100vw;
+    transition:all 0.5s ease;
+    opacity: 0;
+}
+
+.notify-item {
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 500;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.notify-message {
+    padding: 15px 0px;
+}
+
+.notify-show {
+    top: 10px;
+    opacity: 1;
+}
+
+.notify-success {
+    background-color: #51cc6e;
+}
+
+.notify-error {
+    background-color: #ea5d4e;
+}

@@ -6,8 +6,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatPseudoCheckboxModule } from '@angular/material/core';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -21,6 +22,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
+    ReactiveFormsModule
   ]
 })
 export class AuthModule { }

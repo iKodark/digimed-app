@@ -1,8 +1,15 @@
+.container-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('assets/img/bg-login.jpg');
+}
+
 .card{
     width: 350px;
     height: 350px;
-    margin-top: 150px;
-    margin-left: 520px;
 }
 
 .titulo{

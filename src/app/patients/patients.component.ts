@@ -1,28 +1,28 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EmployeesListService } from './services/employees-list.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
-import { LocalstorageService } from '../../services/localstorage/localstorage.service';
+import { PatientsService } from './services/patients.service';
+import { LocalstorageService } from '../services/localstorage/localstorage.service';
+import Swal from 'sweetalert2'
 
 const CELLPHONE = '(00) 0 0000-0000';
 const LANDLINE= '(00) 0000-0000';
 
 @Component({
-  selector: 'app-employees-list',
-  templateUrl: './employees-list.component.html',
-  styleUrls: ['./employees-list.component.css']
+  selector: 'app-patients',
+  templateUrl: './patients.component.html',
+  styleUrls: ['./patients.component.css']
 })
-export class EmployeesListComponent implements OnInit {
+export class PatientsComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  displayedColumns: string[] = ['name', 'email', 'cpf', 'role', 'action'];
+  displayedColumns: string[] = ['name', 'email', 'cpf', 'action'];
 
-  employees = new MatTableDataSource<any>([]);
+  patients = new MatTableDataSource<any>([]);
 
   form = new FormGroup({
     id: new FormControl(''),
@@ -50,43 +50,28 @@ export class EmployeesListComponent implements OnInit {
     ]),
     state: new FormControl('', [
       Validators.required
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(6)
-    ]),
-    re_password: new FormControl('', [
-      
-    ]),
-    role: new FormControl('', [
-      Validators.required,
-    ]),
-  }, {
-    validators: this.password.bind(this)
+    ])
   });
 
   allCities = [];
 
   allStates = [];
 
-  allRoles = [];
-
   phoneMask = LANDLINE;
   previusLength = 0;
 
   constructor(
-    public employeesListService: EmployeesListService,
-    public localStorageService: LocalstorageService
+    private patientsService: PatientsService,
+    private localStorageService: LocalstorageService
   ) { }
 
   ngOnInit(): void {
 
-    this.getEmployees();
+    this.getPatients();
     this.getAllStates();
-    this.getAllRoles();
   }
 
-  //MASKstart
+   //MASKstart
   onPhoneChanged() {
     if (this.form.get('phone').value?.length <= 10 && this.phoneMask === CELLPHONE) {
       this.phoneMask = LANDLINE;
@@ -100,42 +85,24 @@ export class EmployeesListComponent implements OnInit {
   }
   //MASKend
 
-  debug(){
-    console.log(this.form.value);
-  }
+  getPatients() {
 
-  password(formGroup: FormGroup) {
-    const { value: password } = formGroup.get('password');
-    const { value: re_password } = formGroup.get('re_password');
-    if(password !== re_password){
-      formGroup.get('re_password').setErrors({ NoPassswordMatch: true });
-    }
-  }
-
-  getEmployees() {
-
-    this.employeesListService.getEmployees(this.localStorageService.getLocalStorage('user').user.company).subscribe((employees) => {
-      this.employees.data = employees.data;
+    this.patientsService.getPatients(this.localStorageService.getLocalStorage('user').user.company).subscribe((patients) => {
+      this.patients.data = patients.data;
     });
   }
 
   getCitiesByState(state) {
 
-    state ? this.employeesListService.getCitiesByState(state).subscribe((cities) => {
+    state ? this.patientsService.getCitiesByState(state).subscribe((cities) => {
       this.allCities = cities.data;
     }): null;
   }
 
   getAllStates() {
 
-    this.employeesListService.getAllStates().subscribe((states) => {
+    this.patientsService.getAllStates().subscribe((states) => {
       this.allStates = states.data;
-    });
-  }
-
-  getAllRoles() {
-    this.employeesListService.getAllRoles().subscribe((roles) => {
-      this.allRoles = roles.data;
     });
   }
 
@@ -155,18 +122,18 @@ export class EmployeesListComponent implements OnInit {
   submit(formDirective) {
 
     if(this.form.value.id){
-      this.employeesListService.updateEmployee(this.form.value).subscribe((employee) => {
+      this.patientsService.updatePatient(this.form.value).subscribe((patient) => {
         this.clear();
         formDirective.resetForm();
-        this.getEmployees();
+        this.getPatients();
       });
     }else{
 
       this.form.value.company = this.localStorageService.getLocalStorage('user').user.company;
-      this.employeesListService.createEmployee(this.form.value).subscribe((employee) => {
+      this.patientsService.createPatient(this.form.value).subscribe((patient) => {
         this.clear();
         formDirective.resetForm();
-        this.getEmployees();
+        this.getPatients();
       });
     }
   }
@@ -175,39 +142,36 @@ export class EmployeesListComponent implements OnInit {
 
     this.form.reset();
     this.form.markAsPristine();
-    this.form.controls['password'].enable();
-    this.form.controls['re_password'].enable();
   }
 
-  edit(employee) {
+  edit(patient) {
 
-    employee = {
-      ...employee,
-      city: employee.city.id,
-      state: employee.city.state.id,
-      role: employee.roles_id
+    patient = {
+      ...patient,
+      city: patient.city.id,
+      state: patient.city.state.id
     };
-    this.form.patchValue(employee);
+    this.form.patchValue(patient);
     this.form.controls['password'].disable();
     this.form.controls['re_password'].disable();
   }
 
-  delete(employee) {
+  delete(patient) {
 
     Swal.fire({
-      title: `Deseja deletar o usuário ${employee.firstName}?`,
-      text: 'O usuário perderá acesso ao sistema!',
+      title: `Deseja deletar o pacient ${patient.firstName}?`,
+      text: 'O pacient perderá acesso ao sistema!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sim, tenho certeza!',
       cancelButtonText: 'Não, pensarei melhor'
     }).then((result) => {
       if (result.value) {
-        this.employeesListService.deleteEmployee(employee.id).subscribe((employee) => {
-          this.getEmployees();
+        this.patientsService.deletePatient(patient.id).subscribe((patient) => {
+          this.getPatients();
           Swal.fire(
             'Deletado!',
-            'Usuário deletado com sucesso.',
+            'Paciente deletado com sucesso.',
             'success'
           )
         });
@@ -222,4 +186,3 @@ export class EmployeesListComponent implements OnInit {
   }
 
 }
-

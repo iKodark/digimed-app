@@ -1,29 +1,34 @@
-<!DOCTYPE html>
-    <html lang="pt-br">
-        <head>
-            <meta charset="utf-8"/>
-        </head>
-        
-            
-            <!-- Card Login -->
-            <mat-card class="card">
-                    <h4><label class="titulo"> Painel Administrativo </label></h4>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Usuário de Acesso</mat-label>
-                        <input matInput placeholder="Ex. Digimed">
-                    </mat-form-field>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Password</mat-label>
-                        <input matInput placeholder="**************" type="password">
-                    </mat-form-field>
-                    <div class="example-button-row">
-                        <button mat-flat-button color="primary" class="botao">Acessar</button><br><br>
-                    </div>  
-                    <p>
-                        <mat-checkbox>Lembrar-me</mat-checkbox>
-                        <a href="#" style="float: right; margin-top: 7px;">Esqueceu a senha?</a>    
-                    </p>
-            </mat-card>
-        
-        
-    </html>
+<div class="container-login">
+    <mat-card class="card">
+            <h4><label class="titulo"> Painel Administrativo </label></h4>
+            <form [formGroup]="form" (ngSubmit)="submit()" >
+                <mat-form-field class="example-full-width">
+                    <mat-label>Email de acesso</mat-label>
+                    <input matInput placeholder="Ex. Digimed" formControlName="email">
+                    <mat-error *ngIf="(form.get('email').dirty || form.get('email').touched) && form.get('email').invalid && form.get('email').errors.required">
+                        O campo email é obrigatório!
+                    </mat-error>
+                    <mat-error *ngIf="(form.get('email').dirty || form.get('email').touched) && form.get('email').invalid && form.get('email').errors.email">
+                        O formato do email está inválido!
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="**************" type="password" formControlName="password">
+                    <mat-error *ngIf="(form.get('password').dirty || form.get('password').touched) && form.get('password').invalid && form.get('password').errors.required">
+                        O campo senha é obrigatório!
+                    </mat-error>
+                    <mat-error *ngIf="(form.get('password').dirty || form.get('password').touched) && form.get('password').invalid && form.get('password').errors.minlength">
+                        O campo senha deve conter no mínimo 6 caracteres!
+                    </mat-error>
+                </mat-form-field>
+                <div class="example-button-row">
+                    <button mat-flat-button color="primary" class="botao" [disabled]="!form.valid">Acessar</button><br><br>
+                </div>  
+                <p>
+                    <mat-checkbox>Lembrar-me</mat-checkbox>
+                    <a href="#" style="float: right; margin-top: 7px;">Esqueceu a senha?</a>    
+                </p>
+            </form>
+    </mat-card>
+</div>
